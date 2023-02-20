@@ -1,17 +1,17 @@
 package com.techavaliation.cooperativism.models;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -24,20 +24,24 @@ public class SessionModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "schedule_id")
-    private ScheduleModel schedule;
-
-    private LocalDateTime timer;
+    
+    private Date timer;
     
     private List<Boolean> votes = new ArrayList<>();
-
+    
+    @OneToMany(mappedBy = "session")
     private List<AssociateModel> associates = new ArrayList<>();
+    
+    @OneToOne
+    @MapsId
+    private ScheduleModel schedule;
 
-    public SessionModel(Long id, ScheduleModel schedule) {
+    public SessionModel() {
+    }
+
+    public SessionModel(Long id, Date timer) {
         this.id = id;
-        this.schedule = schedule;
+        this.timer = timer;
     }
 
     public Long getId() {
@@ -56,11 +60,11 @@ public class SessionModel implements Serializable {
         this.schedule = schedule;
     }
 
-    public LocalDateTime getTimer() {
+    public Date getTimer() {
         return timer;
     }
 
-    public void setTimer(LocalDateTime timer) {
+    public void setTimer(Date timer) {
         this.timer = timer;
     }
 

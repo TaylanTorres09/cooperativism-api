@@ -2,10 +2,16 @@ package com.techavaliation.cooperativism.models;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "associates")
 public class AssociateModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -18,6 +24,13 @@ public class AssociateModel implements Serializable {
     private String email;
 
     private String cpf;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    private SessionModel session;
+
+    public AssociateModel() {
+    }
 
     public AssociateModel(Long id, String name, String email, String cpf) {
         this.id = id;
@@ -61,6 +74,14 @@ public class AssociateModel implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+    
+    public SessionModel getSession() {
+        return session;
+    }
+
+    public void setSession(SessionModel session) {
+        this.session = session;
+    }
 
     @Override
     public int hashCode() {
@@ -86,6 +107,5 @@ public class AssociateModel implements Serializable {
             return false;
         return true;
     }
-
     
 }

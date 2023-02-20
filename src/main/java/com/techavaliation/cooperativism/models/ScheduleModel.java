@@ -2,10 +2,13 @@ package com.techavaliation.cooperativism.models;
 
 import java.io.Serializable;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +21,12 @@ public class ScheduleModel implements Serializable {
     private Long id;
 
     private String content;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "schedule")
+    private SessionModel session;
+
+    public ScheduleModel(){
+    }
 
     public ScheduleModel(Long id, String content) {
         this.id = id;
@@ -38,6 +47,14 @@ public class ScheduleModel implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public SessionModel getSession(){
+        return session;
+    }
+
+    public void setSession(SessionModel session) {
+        this.session = session;
     }
 
     @Override
