@@ -2,6 +2,8 @@ package com.techavaliation.cooperativism.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ public class ScheduleModel implements Serializable {
 
     private String content;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "schedule")
     private SessionModel session;
 
