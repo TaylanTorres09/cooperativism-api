@@ -68,16 +68,8 @@ public class SessionModel implements Serializable {
         return votes;
     }
 
-    public void setVotes(List<Boolean> votes) {
-        this.votes = votes;
-    }
-
     public List<AssociateModel> getAssociates() {
         return associates;
-    }
-
-    public void setAssociates(List<AssociateModel> associates) {
-        this.associates = associates;
     }
 
     @Override
