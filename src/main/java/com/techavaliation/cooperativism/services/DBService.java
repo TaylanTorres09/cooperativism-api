@@ -1,6 +1,5 @@
 package com.techavaliation.cooperativism.services;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
