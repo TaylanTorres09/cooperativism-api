@@ -2,6 +2,8 @@ package com.techavaliation.cooperativism.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,7 @@ public class AssociateModel implements Serializable {
 
     private String cpf;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "session_id")
     private SessionModel session;
