@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +24,10 @@ public class AssociateModel implements Serializable {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
-
+    
+    @Column(unique = true)
     private String cpf;
 
     @JsonIgnore
