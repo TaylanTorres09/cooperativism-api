@@ -1,5 +1,6 @@
 package com.techavaliation.cooperativism.services;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +24,46 @@ public class SessionService {
                 .orElseThrow(() -> new ObjectNotFound("Session id: "+ id + " não existe"));
     }
 
+    
     public SessionModel openSession(SessionDTO sessionDTO) {
         SessionModel session = new SessionModel();
         ScheduleModel schedule = this.scheduleService.findByIdSchedule(sessionDTO.getScheduleId());
-        session.setMinutes((sessionDTO.getMinutes() != null) ? sessionDTO.getMinutes() : 1);
         session.setOpen(true);
+        session.setMinutes((sessionDTO.getMinutes() != null) ? sessionDTO.getMinutes() : 1);
         session.setSchedule(schedule);
-        return this.sessionRepository.save(session);
+        return this.saveSession(session);
     }
 
     public void closeSession(SessionModel session) {
         try {
             Thread.sleep((long) session.getMinutes()*60*1000);
-            session.setOpen(false);
-            this.sessionRepository.save(session);
+
+            SessionModel sessionUpdated = this.findByIdSessionModel(session.getId());
+
+            this.saveSession(sessionUpdated);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+    public SessionModel saveSession(SessionModel session) {
+        return this.sessionRepository.save(session);
+    }
+
+    public String countVotes(SessionModel session) {
+
+        List<Boolean> votes = session.getVotes();
+        Integer votesTrue = 0;
+        for(Boolean vote: votes) {
+            votesTrue += vote ? 1 : 0;
+        }
+        Integer votesFalse = votes.size() - votesTrue;
+
+        session.setOpen(false);
+        this.saveSession(session);
+
+        return String.format("Votos sim: %d, votos não: %d", votesTrue, votesFalse);
+
+    }
 
 }

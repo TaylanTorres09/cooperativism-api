@@ -26,7 +26,7 @@ public class SessionModel implements Serializable {
     private Integer minutes;
 
     private Boolean open;
-    
+
     private List<Boolean> votes = new ArrayList<>();
     
     @OneToMany(mappedBy = "session")
