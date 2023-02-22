@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.techavaliation.cooperativism.dtos.AssociateDTO;
+import com.techavaliation.cooperativism.dtos.AssociateVoteDTO;
 import com.techavaliation.cooperativism.models.AssociateModel;
 import com.techavaliation.cooperativism.services.AssociateService;
 
@@ -38,6 +40,11 @@ public class AssociateController {
         
         //return uri in headers
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/vote")
+    public String voteAssociateInSessionSchedule(@RequestBody AssociateVoteDTO associateVoteDTO) {
+        return this.associateService.voteAssociateInSessionSchedule(associateVoteDTO.getSessionId(), associateVoteDTO.getAssociateId(), associateVoteDTO.getVote());
     }
 
 }
