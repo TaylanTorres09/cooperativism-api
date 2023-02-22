@@ -2,7 +2,6 @@ package com.techavaliation.cooperativism.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -24,7 +23,9 @@ public class SessionModel implements Serializable {
     private Long id;
 
     
-    private Date timer;
+    private Integer minutes;
+
+    private Boolean open;
     
     private List<Boolean> votes = new ArrayList<>();
     
@@ -38,9 +39,9 @@ public class SessionModel implements Serializable {
     public SessionModel() {
     }
 
-    public SessionModel(Long id, Date timer) {
+    public SessionModel(Long id, Integer minutes) {
         this.id = id;
-        this.timer = timer;
+        this.minutes = minutes;
     }
 
     public Long getId() {
@@ -59,12 +60,20 @@ public class SessionModel implements Serializable {
         this.schedule = schedule;
     }
 
-    public Date getTimer() {
-        return timer;
+    public Integer getMinutes() {
+        return minutes;
     }
 
-    public void setTimer(Date timer) {
-        this.timer = timer;
+    public void setMinutes(Integer minutes) {
+        this.minutes = minutes;
+    }
+
+    public Boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
     }
 
     public List<Boolean> getVotes() {

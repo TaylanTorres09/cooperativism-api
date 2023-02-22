@@ -33,7 +33,7 @@ public class DBService {
         AssociateModel associate2 = new AssociateModel(null, "Dorotan", "dorotan@gmail.com", "01234567891");
 
         
-        SessionModel session = new SessionModel(null, new Date());
+        SessionModel session = new SessionModel(null, 1);
         schedule.setSession(session);
         associate1.setSession(session);
         associate2.setSession(session);
