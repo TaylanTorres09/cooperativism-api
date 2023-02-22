@@ -1,7 +1,5 @@
 package com.techavaliation.cooperativism.services;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +38,6 @@ public class SessionService {
             session.setOpen(false);
             this.sessionRepository.save(session);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
