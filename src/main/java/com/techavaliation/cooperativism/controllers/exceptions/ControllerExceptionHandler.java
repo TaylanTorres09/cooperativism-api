@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.techavaliation.cooperativism.services.exceptions.DataIntegrityViolationException;
 import com.techavaliation.cooperativism.services.exceptions.ObjectNotFound;
 
 import jakarta.servlet.ServletRequest;
@@ -28,6 +29,13 @@ public class ControllerExceptionHandler {
         String message = listFieldError.stream().map(er -> er.getDefaultMessage()).toList().get(0);
 
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), message);
+
+        return new ResponseEntity<StandardError>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException e, ServletRequest request) {
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
 
         return new ResponseEntity<StandardError>(error, HttpStatus.BAD_REQUEST);
     }
