@@ -1,5 +1,7 @@
 package com.techavaliation.cooperativism.services;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,7 @@ public class AssociateService {
 
     public String voteAssociateInSessionSchedule(Long sessionId, Long associateId, String vote ) {
         SessionModel session = this.sessionService.findByIdSessionModel(sessionId);
-        if(session.getOpen()) {
+        if(session.getOpen() && this.associateVote(session, associateId)) {
             AssociateModel associate = this.findByIdAssociate(associateId);
             
             associate.setSession(session);
@@ -44,8 +46,18 @@ public class AssociateService {
             this.sessionService.saveSession(session);
 
             return "Sucesso";
+        } else if (session.getOpen()) {
+            return "Você já votou";
         }
         return "Sessão encerrada";
+    }
+
+    public Boolean associateVote(SessionModel session, Long associateId) {
+        List<AssociateModel> associate = session.getAssociates().stream().filter(ass -> ass.getId() == associateId).toList();
+        if(associate.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
 }

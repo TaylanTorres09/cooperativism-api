@@ -39,7 +39,6 @@ public class SessionService {
             Thread.sleep((long) session.getMinutes()*60*1000);
 
             SessionModel sessionUpdated = this.findByIdSessionModel(session.getId());
-
             this.saveSession(sessionUpdated);
         } catch (InterruptedException e) {
             e.printStackTrace();
