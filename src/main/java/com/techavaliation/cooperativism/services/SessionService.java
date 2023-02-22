@@ -25,7 +25,7 @@ public class SessionService {
                 .orElseThrow(() -> new ObjectNotFound("Session id: "+ id + " não existe"));
     }
 
-    public SessionModel create(SessionDTO sessionDTO) {
+    public SessionModel openSession(SessionDTO sessionDTO) {
         SessionModel session = new SessionModel();
         ScheduleModel schedule = this.scheduleService.findByIdSchedule(sessionDTO.getScheduleId());
         session.setTimer(new Date());

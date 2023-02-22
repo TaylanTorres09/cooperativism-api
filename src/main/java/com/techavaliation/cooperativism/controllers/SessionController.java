@@ -28,9 +28,9 @@ public class SessionController {
         return this.sessionService.findByIdSessionModel(id);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<SessionModel> create(@RequestBody SessionDTO sessionDTO) {
-        SessionModel session = this.sessionService.create(sessionDTO);
+    @PostMapping("/open-session")
+    public ResponseEntity<SessionModel> openSession(@RequestBody SessionDTO sessionDTO) {
+        SessionModel session = this.sessionService.openSession(sessionDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path(String.format("/session/%d", session.getId())).buildAndExpand(session.getId()).toUri();
         
