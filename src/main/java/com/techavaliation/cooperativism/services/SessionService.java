@@ -28,9 +28,21 @@ public class SessionService {
     public SessionModel openSession(SessionDTO sessionDTO) {
         SessionModel session = new SessionModel();
         ScheduleModel schedule = this.scheduleService.findByIdSchedule(sessionDTO.getScheduleId());
-        session.setTimer(new Date());
+        session.setMinutes((sessionDTO.getMinutes() != null) ? sessionDTO.getMinutes() : 1);
+        session.setOpen(true);
         session.setSchedule(schedule);
         return this.sessionRepository.save(session);
+    }
+
+    public void closeSession(SessionModel session) {
+        try {
+            Thread.sleep((long) session.getMinutes()*60*1000);
+            session.setOpen(false);
+            this.sessionRepository.save(session);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 

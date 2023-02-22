@@ -28,12 +28,14 @@ public class SessionController {
         return this.sessionService.findByIdSessionModel(id);
     }
 
-    @PostMapping("/open-session")
+    @PostMapping("/open-close-session")
     public ResponseEntity<SessionModel> openSession(@RequestBody SessionDTO sessionDTO) {
         SessionModel session = this.sessionService.openSession(sessionDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path(String.format("/session/%d", session.getId())).buildAndExpand(session.getId()).toUri();
         
+        this.sessionService.closeSession(session);
+
         //return uri in headers
         return ResponseEntity.created(uri).build();
     }
