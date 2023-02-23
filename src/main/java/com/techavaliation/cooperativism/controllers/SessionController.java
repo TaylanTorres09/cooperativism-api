@@ -40,4 +40,9 @@ public class SessionController {
         return ResponseEntity.created(uri).build();
     }
 
+    @GetMapping("/count-votes/{sessionId}")
+    public String countVotes(@PathVariable Long sessionId) {
+        return this.sessionService.countVotes(sessionId);
+    }
+
 }

@@ -49,7 +49,8 @@ public class SessionService {
         return this.sessionRepository.save(session);
     }
 
-    public String countVotes(SessionModel session) {
+    public String countVotes(Long id) {
+        SessionModel session = this.findByIdSessionModel(id);
 
         List<Boolean> votes = session.getVotes();
         Integer votesTrue = 0;
