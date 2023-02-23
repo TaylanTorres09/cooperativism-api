@@ -40,10 +40,11 @@ public class AssociateService {
             AssociateModel associate = this.findByIdAssociate(associateId);
             
             associate.setSession(session);
-            this.associateRepository.save(associate);
-
+            
             session.getVotes().add(vote.equals("Sim") ? true : false);
-
+            session.getAssociates().add(associate);
+            
+            this.associateRepository.save(associate);
             this.sessionService.saveSession(session);
 
             return "Sucesso";

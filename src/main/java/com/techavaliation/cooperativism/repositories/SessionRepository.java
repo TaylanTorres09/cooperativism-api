@@ -7,5 +7,5 @@ import com.techavaliation.cooperativism.models.SessionModel;
 
 @Repository
 public interface SessionRepository extends JpaRepository<SessionModel, Long>{
-    
+
 }

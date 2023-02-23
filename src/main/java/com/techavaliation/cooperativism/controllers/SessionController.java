@@ -34,7 +34,7 @@ public class SessionController {
 
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path(String.format("/session/%d", session.getId())).buildAndExpand(session.getId()).toUri();
         
-        this.sessionService.closeSession(session);
+        this.sessionService.closeSession(session.getMinutes(), session.getId());
 
         //return uri in headers
         return ResponseEntity.created(uri).build();

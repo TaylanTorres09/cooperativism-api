@@ -29,6 +29,7 @@ public class SessionService {
     public SessionModel openSession(SessionDTO sessionDTO) {
         SessionModel session = new SessionModel();
         ScheduleModel schedule = this.scheduleService.findByIdSchedule(sessionDTO.getScheduleId());
+        schedule.setSession(session);
         session.setOpen(true);
         session.setMinutes((sessionDTO.getMinutes() != null) ? sessionDTO.getMinutes() : 1);
         session.setSchedule(schedule);
@@ -36,14 +37,10 @@ public class SessionService {
         return this.saveSession(session);
     }
 
-    public void closeSession(SessionModel session) {
+    public void closeSession(Integer minutes, Long id) {
         try {
-            Thread.sleep((long) session.getMinutes()*60*1000);
-
-            SessionModel sessionUpdated = this.findByIdSessionModel(session.getId());
-            System.out.println(sessionUpdated.getVotes());
-            sessionUpdated.setOpen(false);
-            this.saveSession(sessionUpdated);
+            Thread.sleep((long) minutes*60*1000);
+            this.saveSession(this.findByIdSessionModel(id));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
