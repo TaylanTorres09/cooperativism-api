@@ -40,4 +40,11 @@ public class ControllerExceptionHandler {
         return new ResponseEntity<StandardError>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(com.techavaliation.cooperativism.services.exceptions.NullPointerException.class)
+    public ResponseEntity<StandardError> nullPointerException(com.techavaliation.cooperativism.services.exceptions.NullPointerException e, ServletRequest request) {
+        StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), e.getMessage());
+
+        return new ResponseEntity<StandardError>(error, HttpStatus.BAD_REQUEST);
+    }
+
 }
