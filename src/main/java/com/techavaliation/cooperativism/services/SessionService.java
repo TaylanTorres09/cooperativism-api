@@ -58,9 +58,6 @@ public class SessionService {
         }
         Integer votesFalse = votes.size() - votesTrue;
 
-        session.setOpen(false);
-        this.saveSession(session);
-
         return String.format("Votos sim: %d, votos não: %d", votesTrue, votesFalse);
 
     }
