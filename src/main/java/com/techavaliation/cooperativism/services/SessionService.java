@@ -38,7 +38,7 @@ public class SessionService {
 
     public void closeSession(SessionModel session) {
         try {
-            Thread.sleep((long) session.getMinutes()*60*250);
+            Thread.sleep((long) session.getMinutes()*60*1000);
 
             SessionModel sessionUpdated = this.findByIdSessionModel(session.getId());
             System.out.println(sessionUpdated.getVotes());
