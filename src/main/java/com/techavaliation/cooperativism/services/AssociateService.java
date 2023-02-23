@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techavaliation.cooperativism.dtos.AssociateDTO;
+import com.techavaliation.cooperativism.dtos.ResponseFindByCPFDTO;
 import com.techavaliation.cooperativism.models.AssociateModel;
 import com.techavaliation.cooperativism.models.SessionModel;
 import com.techavaliation.cooperativism.repositories.AssociateRepository;
@@ -58,6 +59,31 @@ public class AssociateService {
             return true;
         }
         return false;
+    }
+
+    public ResponseFindByCPFDTO findByCPF(String cpf) {
+        try {
+            
+            AssociateModel associate = this.associateRepository.findByCPF(cpf);
+            this.findByIdAssociate(associate.getId());
+            
+            ResponseFindByCPFDTO response = new ResponseFindByCPFDTO();
+            if (associate.getSession() == null) {
+                response.setStatus("ABLE_TO_VOTE");
+                return response;
+            } else if (associate.getSession().getOpen() && this.associateVote(associate.getSession(), associate.getId())) {
+                response.setStatus("ABLE_TO_VOTE");
+                return response;
+            } else if(!associate.getSession().getOpen()) {
+                response.setStatus("ABLE_TO_VOTE");
+                return response;
+            }
+
+            response.setStatus("UNABLE_TO_VOTE");
+            return response;
+        } catch (NullPointerException e) {
+            throw new com.techavaliation.cooperativism.services.exceptions.NullPointerException("Not Found");
+        }
     }
 
 }

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.techavaliation.cooperativism.dtos.AssociateDTO;
 import com.techavaliation.cooperativism.dtos.AssociateVoteDTO;
+import com.techavaliation.cooperativism.dtos.ResponseFindByCPFDTO;
 import com.techavaliation.cooperativism.models.AssociateModel;
 import com.techavaliation.cooperativism.services.AssociateService;
 
@@ -45,6 +47,11 @@ public class AssociateController {
     @PutMapping("/vote")
     public String voteAssociateInSessionSchedule(@RequestBody AssociateVoteDTO associateVoteDTO) {
         return this.associateService.voteAssociateInSessionSchedule(associateVoteDTO.getSessionId(), associateVoteDTO.getAssociateId(), associateVoteDTO.getVote());
+    }
+
+    @GetMapping()
+    public ResponseFindByCPFDTO findByCPF(@RequestParam(name = "cpf") String cpf) {
+        return this.associateService.findByCPF(cpf);
     }
 
 }
