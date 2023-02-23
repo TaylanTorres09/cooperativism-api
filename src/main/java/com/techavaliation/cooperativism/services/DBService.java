@@ -1,5 +1,6 @@
 package com.techavaliation.cooperativism.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class DBService {
         ScheduleModel schedule = new ScheduleModel(null, "Pauta padrão");
 
 
-        AssociateModel associate1 = new AssociateModel(null, "Draca", "draca@gmail.com", "01234567890");
-        AssociateModel associate2 = new AssociateModel(null, "Dorotan", "dorotan@gmail.com", "01234567891");
+        AssociateModel associate1 = new AssociateModel(null, "Draca", "draca@gmail.com", "012.345.678-90");
+        AssociateModel associate2 = new AssociateModel(null, "Dorotan", "dorotan@gmail.com", "012.345.678-91");
 
         
         SessionModel session = new SessionModel(null, 1);
@@ -38,6 +39,8 @@ public class DBService {
         associate2.setSession(session);
         
         session.setSchedule(schedule);
+        session.setVotes(new ArrayList<>());
+        session.setOpen(false);
         
         session.getAssociates().addAll(Arrays.asList(associate1, associate2));
         session.getVotes().addAll(Arrays.asList(true, false));
