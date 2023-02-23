@@ -1,5 +1,6 @@
 package com.techavaliation.cooperativism.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,14 +32,17 @@ public class SessionService {
         session.setOpen(true);
         session.setMinutes((sessionDTO.getMinutes() != null) ? sessionDTO.getMinutes() : 1);
         session.setSchedule(schedule);
+        session.setVotes(new ArrayList<>());
         return this.saveSession(session);
     }
 
     public void closeSession(SessionModel session) {
         try {
-            Thread.sleep((long) session.getMinutes()*60*1000);
+            Thread.sleep((long) session.getMinutes()*60*250);
 
             SessionModel sessionUpdated = this.findByIdSessionModel(session.getId());
+            System.out.println(sessionUpdated.getVotes());
+            sessionUpdated.setOpen(false);
             this.saveSession(sessionUpdated);
         } catch (InterruptedException e) {
             e.printStackTrace();

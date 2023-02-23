@@ -27,7 +27,7 @@ public class SessionModel implements Serializable {
 
     private Boolean open;
 
-    private List<Boolean> votes = new ArrayList<>();
+    private List<Boolean> votes;
     
     @OneToMany(mappedBy = "session")
     private List<AssociateModel> associates = new ArrayList<>();
@@ -78,6 +78,10 @@ public class SessionModel implements Serializable {
 
     public List<Boolean> getVotes() {
         return votes;
+    }
+
+    public void setVotes(List<Boolean> votes) {
+        this.votes = votes;
     }
 
     public List<AssociateModel> getAssociates() {
