@@ -3,6 +3,7 @@ package com.techavaliation.cooperativism.controllers;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +31,22 @@ public class SessionController {
 
     @PostMapping("/open-close-session")
     public ResponseEntity<SessionModel> openSession(@RequestBody SessionDTO sessionDTO) {
-        SessionModel session = this.sessionService.openSession(sessionDTO);
-
-        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path(String.format("/session/%d", session.getId())).buildAndExpand(session.getId()).toUri();
         
-        this.sessionService.closeSession(session.getMinutes(), session.getId());
+        SessionModel session = this.sessionService.openSession(sessionDTO);
+        try {
+            URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path(String.format("/session/%d", session.getId())).buildAndExpand(session.getId()).toUri();
+            
+            Thread.sleep((long) session.getMinutes()*60*1000);
 
-        //return uri in headers
-        return ResponseEntity.created(uri).build();
+            //return uri in headers
+            return ResponseEntity.created(uri).build();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        } finally {
+            this.sessionService.closeSession(session.getMinutes(), session.getId());
+        }
+
     }
 
     @GetMapping("/count-votes/{sessionId}")

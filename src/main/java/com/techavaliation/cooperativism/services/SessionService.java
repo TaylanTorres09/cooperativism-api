@@ -38,12 +38,8 @@ public class SessionService {
     }
 
     public void closeSession(Integer minutes, Long id) {
-        try {
-            Thread.sleep((long) minutes*60*1000);
-            this.saveSession(this.findByIdSessionModel(id));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        SessionModel session = this.findByIdSessionModel(id);
+        this.saveSession(session);
     }
 
     public SessionModel saveSession(SessionModel session) {
